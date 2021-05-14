@@ -6,8 +6,8 @@ on:
     branches:
       - master
 
-concurrency: 
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}${{ github.event.after }}
+concurrency:
+  group: ${{ github.event.pull_request && github.event.pull_request.number || github.event.after }}
   cancel-in-progress: true
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - run: |
-          echo "${{ github.workflow }}-${{ github.event.pull_request.number }}${{ github.event.after }}"
+          echo "${{ github.event.pull_request && github.event.pull_request.number || github.event.after }}"
       - run: |
           sleep 600
       - run: |
