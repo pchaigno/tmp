@@ -1,10 +1,14 @@
-name: test
+name: Test workflow
 
 on:
   pull_request: {}
   push:
     branches:
       - master
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}${{ github.event.after }}
+  cancel-in-progress: true
 
 jobs:
   build_commits:
@@ -14,3 +18,7 @@ jobs:
     steps:
       - run: |
           echo "${{ github.workflow }}-${{ github.event.pull_request.number }}${{ github.event.after }}"
+      - run: |
+          sleep 600
+      - run: |
+          echo "Finished!"
