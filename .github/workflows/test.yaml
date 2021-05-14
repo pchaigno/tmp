@@ -13,4 +13,4 @@ jobs:
     timeout-minutes: 60
     steps:
       - run: |
-          echo "${{ github.workflow }}-${{ github.event.pull_request.number }}${{ github.event.push.after }}"
+          echo "${{ github.workflow }}-${{ github.event.pull_request.number }}${{ github.event.after }}"
