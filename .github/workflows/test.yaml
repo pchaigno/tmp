@@ -7,7 +7,7 @@ on:
       - master
 
 concurrency:
-  group: ${{ github.event.pull_request && github.event.pull_request.number || github.event.after }}
+  group: ${{ github.workflow }}${{ github.event.pull_request && github.event.pull_request.number || github.event.after }}
   cancel-in-progress: true
 
 jobs:
