@@ -1,0 +1,12 @@
+name: test
+
+on: [pull_request]
+
+jobs:
+  build_commits:
+    name: Test concurrency group
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - run: |
+          echo "${{ github.workflow }}-${{ github.event.pull_request.number }}"
