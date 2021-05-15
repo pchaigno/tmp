@@ -13,14 +13,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      tested: ${{ steps.tested-tree.outputs.src }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: tested-tree
+        with:
+          base: ${{ github.event.issue.pull_request.base.sha }}
+          filters: |
+            src:
+              - '!(test|Documentation)/**'
+
   build_commits:
+    needs: changes
+    if: needs.changes.outputs.tested == 'true'
     name: Test concurrency group
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
       - run: |
-          echo "${{ github.workflow }} ${{ github.event.issue.pull_request.url || 'scheduled' }}"
+          echo "${{ github.event.issue.pull_request.base.sha }}"
       - run: |
-          sleep 600
+          sleep 60
       - run: |
           echo "Finished!"
