@@ -27,11 +27,11 @@ jobs:
           fetch-depth: 0
       - id: pr-base
         run: |
-          curl ${{ github.event.pull_request.url }} | jq '.base.sha'
+          curl ${{ github.event.issue.pull_request.url }} | jq '.base.sha'
       - uses: dorny/paths-filter@v2
         id: tested-tree
         with:
-          base: ${{ github.event.issue.pull_request.base.sha }}
+          base: ${{ steps.pr-base.outputs }}
           filters: |
             src:
               - '!(test|Documentation)/**'
