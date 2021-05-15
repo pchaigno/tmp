@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tested: ${{ steps.tested-tree.outputs.src }}
-      pr-base: ${{ steps.pr-base.outputs }}
+      pr-base: ${{ steps.pr.outputs.base }}
     steps:
       - name: Checkout code
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
@@ -25,15 +25,15 @@ jobs:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
-      - id: pr-base
+      - id: pr
         run: |
-          curl ${{ github.event.issue.pull_request.url }} | jq '.base.sha'
+          echo "::set-output name=base::$(curl ${{ github.event.issue.pull_request.url }} | jq '.base.sha')"
       - run: |
-          echo "${{ toJSON(steps.pr-base.outputs) }}"
+          echo "${{ toJSON(steps.pr.outputs.base) }}"
       - uses: dorny/paths-filter@v2
         id: tested-tree
         with:
-          base: ${{ steps.pr-base.outputs }}
+          base: ${{ steps.pr.outputs.base }}
           filters: |
             src:
               - '!(test|Documentation)/**'
