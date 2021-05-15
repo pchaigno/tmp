@@ -40,7 +40,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - run: |
-          echo "${{ github.event.issue.pull_request.base.sha }}"
+          echo "${{ toJSON(github.event.issue.pull_request) }}"
       - run: |
           sleep 60
       - run: |
