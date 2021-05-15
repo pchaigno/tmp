@@ -1,13 +1,15 @@
 name: Test workflow
 
 on:
-  pull_request: {}
-  push:
-    branches:
-      - master
+  issue_comment:
+    types:
+      - created
+  # Run every 15 min
+  schedule:
+    - cron:  '*/15 * * * *'
 
 concurrency:
-  group: ${{ github.workflow }}${{ github.event.pull_request && github.event.pull_request.number || github.event.after }}
+  group: ${{ github.workflow }}${{ github.event.issue.pull_request && github.event.issue.pull_request.number || "scheduled" }}
   cancel-in-progress: true
 
 jobs:
@@ -17,7 +19,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - run: |
-          echo "${{ github.workflow }}${{ github.event.pull_request && github.event.pull_request.number || github.event.after }}"
+          echo ${{ github.workflow }}${{ github.event.issue.pull_request && github.event.issue.pull_request.number || 'scheduled' }}
       - run: |
           sleep 600
       - run: |
