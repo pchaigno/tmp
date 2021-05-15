@@ -28,6 +28,8 @@ jobs:
       - id: pr-base
         run: |
           curl ${{ github.event.issue.pull_request.url }} | jq '.base.sha'
+      - run: |
+          echo "${{ toJSON(steps.pr-base.outputs) }}"
       - uses: dorny/paths-filter@v2
         id: tested-tree
         with:
