@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
       - id: pr
         run: |
-          echo "::set-output name=base::$(curl ${{ github.event.issue.pull_request.url }} | jq '.base.sha')"
+          echo "::set-output name=base::$(curl ${{ github.event.issue.pull_request.url }} | jq -r '.base.sha')"
       - run: |
           echo "${{ toJSON(steps.pr.outputs.base) }}"
       - uses: dorny/paths-filter@v2
