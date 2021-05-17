@@ -17,7 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tested: ${{ steps.tested-tree.outputs.src }}
-      pr: ${{ steps.pr.outputs }}
+      pr-base: ${{ steps.pr.outputs.base }}
+      pr-head: ${{ steps.pr.outputs.head }}
     steps:
       - name: Checkout code
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
@@ -49,7 +50,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - run: |
-          echo "${{ needs.changes.outputs.pr.base }}..${{ needs.changes.outputs.pr.head }}"
+          echo "${{ needs.changes.outputs.pr-base }}..${{ needs.changes.outputs.pr-head }}"
       - run: |
           sleep 60
       - run: |
