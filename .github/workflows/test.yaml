@@ -42,14 +42,14 @@ jobs:
               - '!(test|Documentation)/**'
 
   build_commits:
-    needs: changes
-    if: needs.changes.outputs.tested == 'true'
+    needs: check_changes
+    if: needs.check_changes.outputs.tested == 'true'
     name: Test concurrency group
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
       - run: |
-          echo "${{ needs.changes.outputs.pr-base }}..${{ needs.changes.outputs.pr-head }}"
+          echo "${{ needs.check_changes.outputs.pr-base }}..${{ needs.check_changes.outputs.pr-head }}"
       - run: |
           sleep 60
       - run: |
