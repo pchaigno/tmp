@@ -13,7 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  changes:
+  check_changes:
+    name: Deduce required tests from code changes
     runs-on: ubuntu-latest
     outputs:
       tested: ${{ steps.tested-tree.outputs.src }}
