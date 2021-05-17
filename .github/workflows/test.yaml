@@ -46,7 +46,7 @@ jobs:
     timeout-minutes: 60
     steps:
       - run: |
-          echo "${{ needs.changes.outputs.pr-base }}"
+          echo "${{ needs.changes.outputs.pr-base }}..${{ github.ref }}"
       - run: |
           sleep 60
       - run: |
