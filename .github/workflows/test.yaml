@@ -9,7 +9,7 @@ on:
     - cron:  '0 11 * * *'
 
 concurrency:
-  group: "${{ github.workflow }} ${{ github.event.issue.pull_request.url || 'scheduled' }}"
+  group: "${{ github.workflow }} ${{ github.event.issue.pull_request.url || 'scheduled' }} ${{ github.event.comment.body }}"
   cancel-in-progress: true
 
 jobs:
@@ -51,6 +51,6 @@ jobs:
       - run: |
           echo "${{ needs.check_changes.outputs.pr-base }}..${{ needs.check_changes.outputs.pr-head }}"
       - run: |
-          sleep 60
+          sleep 120
       - run: |
           echo "Finished!"
