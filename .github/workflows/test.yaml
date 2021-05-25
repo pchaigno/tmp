@@ -22,17 +22,20 @@ jobs:
       pr-head: ${{ steps.pr.outputs.head }}
     steps:
       - name: Checkout code
+        if: ${{ github.event.issue.pull_request }}
         uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
         with:
           persist-credentials: false
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 1
       - id: pr
+        if: ${{ github.event.issue.pull_request }}
         run: |
           curl ${{ github.event.issue.pull_request.url }} > pr.json
           echo "::set-output name=base::$(jq -r '.base.sha' pr.json)"
           echo "::set-output name=head::$(jq -r '.head.sha' pr.json)"
       - uses: dorny/paths-filter@v2
+        if: ${{ github.event.issue.pull_request }}
         id: tested-tree
         with:
           base: ${{ steps.pr.outputs.base }}
