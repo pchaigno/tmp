@@ -12,7 +12,7 @@ concurrency:
   group: |
     "${{ github.workflow }} ${{ github.event.issue.pull_request.url || 'scheduled' }}
      ${{ (startsWith(github.event.comment.body, 'ci-gke') ||
-         (github.event.comment.body, 'test-me-please') && 'trigger-phrase') }}"
+          startsWith(github.event.comment.body, 'test-me-please')) && 'trigger-phrase' }}"
   cancel-in-progress: true
 
 jobs:
