@@ -56,15 +56,16 @@ jobs:
   build_commits:
     needs: check_changes
     if: needs.check_changes.outputs.tested == 'true'
-    name: |
-      "${{ github.workflow }} ${{ github.event.issue.pull_request.url || 'scheduled' }}
-       ${{ (startsWith(github.event.comment.body, 'ci-gke') ||
-            startsWith(github.event.comment.body, 'test-me-please')) && 'trigger-phrase' }}"
+    name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
       - run: |
           echo "${{ needs.check_changes.outputs.pr-base }}..${{ needs.check_changes.outputs.pr-head }}"
+      - run: |
+          echo "${{ github.workflow }} ${{ github.event.issue.pull_request.url || 'scheduled' }}
+                ${{ (startsWith(github.event.comment.body, 'ci-gke') ||
+                     startsWith(github.event.comment.body, 'test-me-please')) && 'trigger-phrase' }}"
       - run: |
           sleep 120
       - run: |
