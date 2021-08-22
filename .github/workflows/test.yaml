@@ -13,4 +13,4 @@ jobs:
     steps:
       - run: |
           echo "Yeyha!"
-          echo "${{ toJSON(github.event) }}"
+          ./update-project.sh ${{ github.event.label.name }}
