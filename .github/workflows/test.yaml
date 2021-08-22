@@ -13,4 +13,4 @@ jobs:
     steps:
       - run: |
           echo "Yeyha!"
-          jq "${{ github.event }}"
+          echo "${{ github.event }}"
