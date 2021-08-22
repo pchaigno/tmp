@@ -13,4 +13,4 @@ jobs:
     steps:
       - run: |
           echo "Yeyha!"
-          echo "${{ github.event }}"
+          echo "${{ toJSON(github.event) }}"
